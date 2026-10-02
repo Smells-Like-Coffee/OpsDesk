@@ -1,0 +1,54 @@
+filters:
+  and:
+    - file.inFolder("Meetings")
+    - file.ext == "md"
+    - note.type == "meeting"
+properties:
+  file.name:
+    displayName: Meeting
+  note.status:
+    displayName: Status
+  note.date:
+    displayName: Meeting Date
+  note.projects:
+    displayName: Projects
+  note.applications:
+    displayName: Applications
+  file.mtime:
+    displayName: Last Updated
+views:
+  - type: table
+    name: All Meetings
+    order:
+      - file.name
+      - date
+      - projects
+      - applications
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: Upcoming
+    filters: note.date >= today()
+    order:
+      - file.name
+      - date
+      - projects
+      - applications
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: Past Meetings
+    filters: note.date < today()
+    order:
+      - file.name
+      - date
+      - projects
+      - applications
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC

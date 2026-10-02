@@ -1,0 +1,52 @@
+filters:
+  and:
+    - file.inFolder("KB")
+    - file.ext == "md"
+    - file.name != "KB Dashboard"
+properties:
+  file.name:
+    displayName: Entry
+  note.status:
+    displayName: Status
+  note.date:
+    displayName: Date
+  note.projects:
+    displayName: Projects
+  note.applications:
+    displayName: Applications
+  file.mtime:
+    displayName: Last Updated
+views:
+  - type: table
+    name: Applications
+    filters: note.type == "application"
+    order:
+      - file.name
+      - projects
+      - date
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: General Articles
+    filters: note.type == "kb"
+    order:
+      - file.name
+      - date
+      - projects
+      - applications
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: Other KB Notes
+    filters: note.type != "kb" && note.type != "application"
+    order:
+      - file.name
+      - type
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC

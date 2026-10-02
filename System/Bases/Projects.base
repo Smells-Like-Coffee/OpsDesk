@@ -1,0 +1,54 @@
+filters:
+  and:
+    - file.inFolder("Projects")
+    - file.ext == "md"
+    - note.type == "project"
+properties:
+  file.name:
+    displayName: Project
+  note.status:
+    displayName: Status
+  note.date:
+    displayName: Date
+  note.projects:
+    displayName: Projects
+  note.applications:
+    displayName: Applications
+  file.mtime:
+    displayName: Last Updated
+views:
+  - type: table
+    name: Active and Waiting
+    filters: '!note.status || note.status.lower() == "active" || note.status.lower() == "waiting"'
+    order:
+      - file.name
+      - status
+      - applications
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: All Projects
+    order:
+      - file.name
+      - status
+      - applications
+      - date
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: table
+    name: By Status
+    groupBy:
+      property: status
+      direction: ASC
+    order:
+      - file.name
+      - status
+      - applications
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
